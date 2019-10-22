@@ -1,0 +1,62 @@
+ext {
+
+    //region library versions
+
+    androidxKtxVersion =                "1.0.1"
+    androidxAppCompatVersion =          "1.0.2"
+    androidxConstraintLayoutVersion =   "1.1.3"
+    androidxSupportV4Version =          "1.0.0"
+    androidxRecyclerViewVersion =       "1.0.0"
+    androidxMaterialVersion =           "1.0.0"
+    androidxCardViewVersion =           "1.0.0"
+
+    androidArchLifecycleVersion =       "2.1.0"
+    androidArchRoomVersion =            "2.1.0"
+
+    koinVersion =                       "2.0.1"
+
+    junitVersion =                      "4.12"
+
+    //endregion
+
+    libraries = [
+
+            // region AndroidX
+            androidX = [
+                    ktx:                "androidx.core:core-ktx:$androidxKtxVersion",
+                    appCompat:          "androidx.appcompat:appcompat:$androidxAppCompatVersion",
+                    constraintLayout:   "androidx.constraintlayout:constraintlayout:$androidxConstraintLayoutVersion",
+                    supportV4:          "androidx.legacy:legacy-support-v4:$androidxSupportV4Version",
+                    recyclerView:       "androidx.recyclerview:recyclerview:$androidxRecyclerViewVersion",
+                    material:           "com.google.android.material:material:$androidxMaterialVersion",
+                    cardView:           "androidx.cardview:cardview:$androidxCardViewVersion",
+            ],
+
+            androidArch = [
+                    room = [
+                            compiler:   "androidx.room:room-compiler:$androidArchRoomVersion",
+                            runtime:    "androidx.room:room-runtime:$androidArchRoomVersion"
+                    ],
+
+                    lifecycle = [
+                            extensions:             "androidx.lifecycle:lifecycle-extensions:$androidArchLifecycleVersion",
+                            annotationProcessor:    "androidx.lifecycle:lifecycle-compiler:$androidArchLifecycleVersion",
+                    ]
+            ],
+
+            kotlinlib = [
+                    stdlib:     "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+            ],
+
+            koin = [
+                    core:               "org.koin:koin-core:$koinVersion",
+                    android:            "org.koin:koin-android:$koinVersion",
+                    androidXViewModel:  "org.koin:koin-androidx-viewmodel:$koinVersion"
+            ],
+            //endregion
+
+            testLibraries = [
+                    junit:      "junit:junit:$junitVersion"
+            ]
+    ]
+}

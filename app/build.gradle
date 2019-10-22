@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.android.compileSdkVersion
+    defaultConfig {
+        applicationId "com.mashjulal.android.taplan"
+        minSdkVersion rootProject.android.minSdkVersion
+        targetSdkVersion rootProject.android.targetSdkVersion
+        versionCode rootProject.android.version
+        versionName rootProject.android.versionCode
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation kotlinlib.stdlib
+
+    implementation androidX.ktx
+    implementation androidX.appCompat
+    implementation androidX.constraintLayout
+
+    implementation androidArch.room.runtime
+    kapt androidArch.room.compiler
+
+    implementation androidArch.lifecycle.extensions
+    kapt androidArch.lifecycle.compiler
+
+    implementation koin.core
+    implementation koin.android
+    implementation koin.androidXViewModel
+
+    testImplementation testLibraries.junit
+}
