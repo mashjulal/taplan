@@ -22,6 +22,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -31,6 +34,9 @@ dependencies {
     implementation androidX.ktx
     implementation androidX.appCompat
     implementation androidX.constraintLayout
+    implementation androidX.recyclerView
+    implementation androidX.material
+    implementation androidX.supportV4
 
     implementation androidArch.room.runtime
     kapt androidArch.room.compiler
