@@ -33,6 +33,7 @@ dependencies {
 
     implementation androidX.ktx
     implementation androidX.appCompat
+    implementation androidX.appCompatResources
     implementation androidX.constraintLayout
     implementation androidX.recyclerView
     implementation androidX.material
@@ -47,6 +48,8 @@ dependencies {
     implementation koin.core
     implementation koin.android
     implementation koin.androidXViewModel
+
+    implementation otherLibraries.materialCalendarView
 
     testImplementation testLibraries.junit
 }
