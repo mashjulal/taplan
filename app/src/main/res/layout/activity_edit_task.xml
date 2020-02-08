@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.edittask.EditTaskActivity"
+    android:gravity="center_vertical">
+
+    <com.mashjulal.android.taplan.presentation.view.timeperiodseekbar.TimePeriodSeekbar
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:padding="16dp"/>
+
+</LinearLayout>
