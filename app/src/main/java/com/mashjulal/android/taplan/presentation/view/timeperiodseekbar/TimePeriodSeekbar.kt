@@ -12,9 +12,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.abs
 import kotlin.math.roundToInt
-import android.view.ViewConfiguration
 import java.lang.IllegalArgumentException
-import java.util.*
 
 
 class TimePeriodSeekbar @JvmOverloads constructor(
@@ -27,6 +25,10 @@ class TimePeriodSeekbar @JvmOverloads constructor(
 
     private var barMinValue: Int = 0
     private var barMaxValue: Int = 100
+    private var barStepValue: Int = 1
+
+    private var barStepMinValue: Int = barMinValue / barStepValue
+    private var barStepMaxValue: Int = barMaxValue / barStepValue
 
     private var thumbMinValue: Int = barMinValue
     private var thumbMaxValue: Int = barMaxValue
@@ -147,12 +149,12 @@ class TimePeriodSeekbar @JvmOverloads constructor(
     }
 
     private fun setThumbMinValue(value: Int) {
-        thumbMinValue = max(barMinValue, min(barMaxValue, min(value, thumbMaxValue)))
+        thumbMinValue = roundOffValueToStep(max(barMinValue, min(barMaxValue, min(value, thumbMaxValue))))
         invalidate()
     }
 
     private fun setThumbMaxValue(value: Int) {
-        thumbMaxValue = max(barMinValue, min(barMaxValue, max(value, thumbMinValue)))
+        thumbMaxValue = roundOffValueToStep(max(barMinValue, min(barMaxValue, max(value, thumbMinValue))))
         invalidate()
     }
 
@@ -167,6 +169,11 @@ class TimePeriodSeekbar @JvmOverloads constructor(
             thumbSize
         )
         thumbDrawable.draw(canvas)
+    }
+
+    private fun roundOffValueToStep(value: Int): Int {
+        val d = value / barStepValue
+        return max(barStepMinValue, min(barStepMaxValue, d)) * barStepValue
     }
 
     private fun progressToPx(value: Int): Float {
