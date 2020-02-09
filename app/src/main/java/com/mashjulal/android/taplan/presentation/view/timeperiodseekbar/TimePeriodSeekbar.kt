@@ -35,6 +35,11 @@ class TimePeriodSeekbar @JvmOverloads constructor(
 
     private val rect: RectF = RectF()
     private val paint: Paint = Paint()
+    private val textPaint: Paint = Paint().apply {
+        color = Color.BLACK
+        textSize = 16 * resources.displayMetrics.scaledDensity
+        isAntiAlias = true
+    }
 
     private var activePointerId: Int = 0
     private var downMotionX: Float = 0f
@@ -62,10 +67,10 @@ class TimePeriodSeekbar @JvmOverloads constructor(
         canvas.drawRect(rect, paint)
 
         // draw minimum thumb
-        drawThumb(progressToPx(thumbMinValue), canvas)
+        drawThumb(thumbMinValue, canvas)
 
         // draw maximum thumb
-        drawThumb(progressToPx(thumbMaxValue), canvas)
+        drawThumb(thumbMaxValue, canvas)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -159,9 +164,10 @@ class TimePeriodSeekbar @JvmOverloads constructor(
     }
 
     private fun drawThumb(
-        screenCoord: Float,
+        value: Int,
         canvas: Canvas
     ) {
+        val screenCoord = progressToPx(value)
         thumbDrawable.setBounds(
             screenCoord.toInt() - thumbSize / 2,
             0,
@@ -169,6 +175,12 @@ class TimePeriodSeekbar @JvmOverloads constructor(
             thumbSize
         )
         thumbDrawable.draw(canvas)
+
+        val valStr = value.toString()
+        canvas.drawText(valStr,
+            screenCoord - thumbSize / 2,
+            thumbSize.toFloat() * 2,
+            textPaint)
     }
 
     private fun roundOffValueToStep(value: Int): Int {
