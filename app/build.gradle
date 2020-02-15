@@ -40,10 +40,13 @@ dependencies {
     implementation androidX.supportV4
 
     implementation androidArch.room.runtime
-    kapt androidArch.room.compiler
+    annotationProcessor androidArch.room.compiler
 
     implementation androidArch.lifecycle.extensions
-    kapt androidArch.lifecycle.compiler
+    annotationProcessor androidArch.lifecycle.compiler
+
+    implementation coroutines.core
+    implementation coroutines.android
 
     implementation koin.core
     implementation koin.android
