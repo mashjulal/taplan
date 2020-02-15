@@ -8,7 +8,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.main.MainActivity" />
+        <activity
+            android:name=".presentation.main.MainActivity"
+            android:label=""/>
         <activity
             android:name=".presentation.splashscreen.SplashActivity"
             android:theme="@style/AppTheme.Launcher">

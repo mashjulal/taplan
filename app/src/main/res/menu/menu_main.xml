@@ -2,12 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/mi_today"
         android:icon="@drawable/ic_today_24dp"
         android:title="@string/today" />
     <item
+        android:id="@+id/mi_events"
         android:icon="@drawable/ic_format_list_numbered_24dp"
         android:title="@string/events" />
     <item
+        android:id="@+id/mi_settings"
         android:icon="@drawable/ic_settings_24dp"
         android:title="@string/settings" />
 </menu>
