@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mashjulal.android.taplan">
 
     <application
@@ -9,6 +8,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".presentation.main.MainActivity" />
         <activity
             android:name=".presentation.splashscreen.SplashActivity"
             android:theme="@style/AppTheme.Launcher">
@@ -18,8 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.dailyschedule.DailyScheduleActivity"/>
-        <activity android:name=".presentation.edittask.EditTaskActivity"/>
+        <activity android:name=".presentation.dailyschedule.DailyScheduleActivity" />
+        <activity android:name=".presentation.edittask.EditTaskActivity" />
     </application>
 
 </manifest>

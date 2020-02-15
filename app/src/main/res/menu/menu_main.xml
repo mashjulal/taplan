@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:icon="@drawable/ic_today_24dp"
+        android:title="@string/today" />
+    <item
+        android:icon="@drawable/ic_format_list_numbered_24dp"
+        android:title="@string/events" />
+    <item
+        android:icon="@drawable/ic_settings_24dp"
+        android:title="@string/settings" />
+</menu>

@@ -4,6 +4,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="colorControlHighlight">#FFDE8A</item>
+
+        <item name="appBarTheme">@style/ThemeOverlay.ActionBar</item>
     </style>
 
     <style name="AppTheme.Launcher"/>

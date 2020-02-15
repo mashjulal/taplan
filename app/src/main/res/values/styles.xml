@@ -1,3 +1,7 @@
 <resources>
 
+    <style name="ThemeOverlay.ActionBar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
 </resources>
