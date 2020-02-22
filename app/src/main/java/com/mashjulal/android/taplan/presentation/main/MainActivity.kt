@@ -14,7 +14,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
 
         bottomNavigationView.setOnNavigationItemSelectedListener {
             selectBottomItem(it.itemId)
@@ -28,16 +27,6 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, fr)
             .commit()
-        supportActionBar?.title = getTitleForId(menuItemId)
-    }
-
-    private fun getTitleForId(itemId: Int): String {
-        return getString(when (itemId) {
-            R.id.mi_today -> R.string.today
-            R.id.mi_events -> R.string.events
-            R.id.mi_settings -> R.string.settings
-            else -> throw IllegalArgumentException("Unknown menu item id: $itemId")
-        })
     }
 
     private fun getFragmentForId(itemId: Int): Fragment {

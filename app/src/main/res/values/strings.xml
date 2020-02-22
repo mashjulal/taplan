@@ -3,4 +3,7 @@
     <string name="today">Today</string>
     <string name="events">Events</string>
     <string name="settings">Settings</string>
+    <string name="next_task">Следующее занятие</string>
+    <string name="up_next">Далее</string>
+    <string name="all_task_for_today">Все занятия на сегодня</string>
 </resources>
