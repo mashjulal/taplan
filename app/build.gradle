@@ -39,11 +39,11 @@ dependencies {
     implementation androidX.material
     implementation androidX.supportV4
 
-    implementation androidArch.room.runtime
-    annotationProcessor androidArch.room.compiler
+    implementation archRoom.runtime
+    annotationProcessor archRoom.compiler
 
-    implementation androidArch.lifecycle.extensions
-    annotationProcessor androidArch.lifecycle.compiler
+    implementation archLifecycle.extensions
+    annotationProcessor archLifecycle.annotationProcessor
 
     implementation coroutines.core
     implementation coroutines.android
