@@ -3,15 +3,16 @@
     package="com.mashjulal.android.taplan">
 
     <application
+        android:name=".TaplanApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".TaplanApplication">
+        android:theme="@style/AppTheme">
+        <activity android:name=".presentation.scheduledtasks.ScheduledTasksActivity"/>
         <activity
             android:name=".presentation.main.MainActivity"
-            android:label=""/>
+            android:label="" />
         <activity
             android:name=".presentation.splashscreen.SplashActivity"
             android:theme="@style/AppTheme.Launcher">

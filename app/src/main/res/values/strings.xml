@@ -6,4 +6,5 @@
     <string name="next_task">Следующее занятие</string>
     <string name="up_next">Далее</string>
     <string name="all_task_for_today">Все занятия на сегодня</string>
+    <string name="period_pattern">%1$s-%2$s</string>
 </resources>

@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.mashjulal.android.taplan.R
 import com.mashjulal.android.taplan.presentation.main.MainActivity
+import com.mashjulal.android.taplan.presentation.scheduledtasks.ScheduledTasksActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
+private const val DELAY_MILLIS = 1 * 1000L
 
 class SplashActivity : AppCompatActivity() {
 
@@ -17,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         GlobalScope.launch(Dispatchers.IO) {
-            delay(2000L)
+            delay(DELAY_MILLIS)
             launch(Dispatchers.Main) {
                 routeToScreen()
             }
@@ -25,7 +28,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun routeToScreen() {
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this, ScheduledTasksActivity::class.java))
         finish()
     }
 }
