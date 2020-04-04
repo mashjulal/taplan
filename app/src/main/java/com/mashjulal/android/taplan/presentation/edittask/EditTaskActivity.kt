@@ -9,8 +9,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.google.android.material.textfield.TextInputLayout
 import com.mashjulal.android.taplan.R
 import kotlinx.android.synthetic.main.activity_edit_task.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -37,18 +40,32 @@ class EditTaskActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
+        viewModel.titleLiveData.observe(this, Observer { updateTextInputField(it, til_task_title) })
+        viewModel.hourInWeekLiveData.observe(this, Observer { updateTextInputField(it, til_hours_per_week) })
         viewModel.selectedStartTimeLiveData.observe(this, Observer { updateTimeField(it, true) })
         viewModel.selectedEndTimeLiveData.observe(this, Observer { updateTimeField(it, false) })
+
         viewModel.saveTaskCompleted.observe(this, Observer { closeActivity() })
-        viewModel.hoursPerWeekValidationErrorLiveData.observe(this, Observer { updateWeekPerDayField(it) })
-        viewModel.titleValidationErrorLiveData.observe(this, Observer { updateTitleField(it) })
         viewModel.validationPassed.observe(this, Observer { changeSaveButtonVisibility(it) })
 
+        viewModel.hoursPerWeekValidationErrorLiveData.observe(this, Observer { updateWeekPerDayFieldError(it) })
+        viewModel.titleValidationErrorLiveData.observe(this, Observer { updateTitleFieldError(it) })
+        viewModel.startTimeValidationErrorLiveData.observe(this, Observer { updateTimeError(it, tv_start_time_error) })
+        viewModel.endTimeValidationErrorLiveData.observe(this, Observer { updateTimeError(it, tv_end_time_error) })
+
+        viewModel.validateTitle()
+        viewModel.validateHourCount()
+
         val calendar = Calendar.getInstance()
-        val selectedTimePair = calendar[Calendar.HOUR_OF_DAY] to calendar[Calendar.MINUTE]
-        viewModel.selectedStartTimeLiveData.value = selectedTimePair
-        viewModel.selectedEndTimeLiveData.value = selectedTimePair
-        viewModel.validationPassed.value = false
+        val selectedHours = calendar[Calendar.HOUR_OF_DAY]
+        val selectedMinutes = calendar[Calendar.MINUTE]
+        viewModel.validateStartTime(selectedHours to selectedMinutes)
+        viewModel.validateEndTime(selectedHours to selectedMinutes+1)
+    }
+
+    private fun updateTimeError(error: String?, tvError: TextView) {
+        tvError.text = error
+        tvError.visibility = if (error.isNullOrEmpty()) View.GONE else View.VISIBLE
     }
 
     private fun changeSaveButtonVisibility(visible: Boolean) {
@@ -59,11 +76,11 @@ class EditTaskActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateWeekPerDayField(error: String?) {
+    private fun updateWeekPerDayFieldError(error: String?) {
         til_hours_per_week.error = error
     }
 
-    private fun updateTitleField(error: String?) {
+    private fun updateTitleFieldError(error: String?) {
         til_task_title.error = error
     }
 
@@ -73,8 +90,14 @@ class EditTaskActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        section_start_time.setOnClickListener { showTimePickerDialog(viewModel.selectedStartTimeLiveData) }
-        section_end_time.setOnClickListener { showTimePickerDialog(viewModel.selectedEndTimeLiveData) }
+        section_start_time.setOnClickListener {
+            val (hours, minutes) = viewModel.selectedStartTimeLiveData.value ?: throw IllegalArgumentException()
+            showTimePickerDialog(hours, minutes) { viewModel.validateStartTime(it) }
+        }
+        section_end_time.setOnClickListener {
+            val (hours, minutes) = viewModel.selectedEndTimeLiveData.value ?: throw IllegalArgumentException()
+            showTimePickerDialog(hours, minutes) { viewModel.validateEndTime(it) }
+        }
         fab_save_task.setOnClickListener { viewModel.saveTask() }
         til_hours_per_week.editText?.addTextChangedListener(ValidationTextWatcher { viewModel.validateHourCount(it) })
         til_task_title.editText?.addTextChangedListener(ValidationTextWatcher { viewModel.validateTitle(it) })
@@ -92,16 +115,20 @@ class EditTaskActivity : AppCompatActivity() {
         }
     }
 
-    private fun showTimePickerDialog(timeLiveData: MutableLiveData<Pair<Int, Int>>) {
-        timeLiveData.value?.let {
-            TimePickerDialog(
-                this,
-                TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->  timeLiveData.value = hourOfDay to minute},
-                it.first,
-                it.second,
-                true)
-                .show()
+    private fun updateTextInputField(title: String, field: TextInputLayout) {
+        if (title != field.editText?.text.toString()) {
+            field.editText?.setText(title)
         }
+    }
+
+    private fun showTimePickerDialog(hours: Int, minutes: Int, onTimeSetListener: (Pair<Int, Int>) -> Unit) {
+        TimePickerDialog(
+            this,
+            TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute -> onTimeSetListener.invoke(hourOfDay to minute) },
+            hours,
+            minutes,
+            true)
+            .show()
     }
 
     companion object {

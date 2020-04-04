@@ -81,6 +81,13 @@
             tools:text="10:00"
             android:drawableEnd="@drawable/ic_time_24dp"
             android:drawableTint="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/tv_start_time_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -108,6 +115,14 @@
             tools:text="12:00"
             android:drawableEnd="@drawable/ic_time_24dp"
             android:drawableTint="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/tv_end_time_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:visibility="gone" />
+
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
