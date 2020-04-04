@@ -1,5 +1,6 @@
 package com.mashjulal.android.taplan.presentation.scheduledtasks
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -8,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.mashjulal.android.taplan.R
 import com.mashjulal.android.taplan.android.ResourceExtractor
+import com.mashjulal.android.taplan.presentation.edittask.EditTaskActivity
+import com.mashjulal.android.taplan.presentation.edittask.EditTaskActivity.Companion.REQUEST_CODE_NEW
 import com.mashjulal.android.taplan.presentation.scheduledtasks.viewholder.SectionHeaderViewHolderDelegate
 import com.mashjulal.android.taplan.presentation.scheduledtasks.viewholder.TaskViewHolderDelegate
 import com.mashjulal.android.taplan.presentation.utils.recyclerview.CompositeViewHolderAdapter
@@ -28,8 +31,15 @@ class ScheduledTasksActivity : AppCompatActivity() {
         initViewModel()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // TODO add page reloading
+    }
+
     private fun initViews() {
         initRecyclerView()
+
+        fab_new_task.setOnClickListener { startActivityForResult(EditTaskActivity.newIntent(this), REQUEST_CODE_NEW) }
     }
 
     private fun initRecyclerView() {

@@ -7,4 +7,5 @@
     <string name="up_next">Далее</string>
     <string name="all_task_for_today">Все занятия на сегодня</string>
     <string name="period_pattern">%1$s-%2$s</string>
+    <string name="time_hours_and_minutes_pattern">%1$02d:%2$02d</string>
 </resources>
