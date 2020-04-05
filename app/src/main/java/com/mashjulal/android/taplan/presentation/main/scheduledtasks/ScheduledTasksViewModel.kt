@@ -1,4 +1,4 @@
-package com.mashjulal.android.taplan.presentation.scheduledtasks
+package com.mashjulal.android.taplan.presentation.main.scheduledtasks
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

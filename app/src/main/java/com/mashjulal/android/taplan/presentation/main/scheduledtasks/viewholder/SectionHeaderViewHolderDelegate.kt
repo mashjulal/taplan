@@ -1,4 +1,4 @@
-package com.mashjulal.android.taplan.presentation.scheduledtasks.viewholder
+package com.mashjulal.android.taplan.presentation.main.scheduledtasks.viewholder
 
 import com.mashjulal.android.taplan.R
 import com.mashjulal.android.taplan.models.presentation.SectionHeaderViewModel
