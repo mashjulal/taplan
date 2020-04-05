@@ -35,18 +35,8 @@ class ScheduledTasksFragment : Fragment() {
         initViewModel()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        // TODO add page reloading
-    }
-
     private fun initViews() {
         initRecyclerView()
-
-        fab_new_task.setOnClickListener { startActivityForResult(
-            EditTaskActivity.newIntent(requireContext()),
-            EditTaskActivity.REQUEST_CODE_NEW
-        ) }
     }
 
     private fun initRecyclerView() {

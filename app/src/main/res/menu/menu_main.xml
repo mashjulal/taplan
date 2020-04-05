@@ -10,6 +10,10 @@
         android:icon="@drawable/ic_format_list_numbered_24dp"
         android:title="@string/events" />
     <item
+        android:id="@+id/mi_tasks"
+        android:icon="@drawable/ic_format_list_numbered_24dp"
+        android:title="@string/events" />
+    <item
         android:id="@+id/mi_settings"
         android:icon="@drawable/ic_settings_24dp"
         android:title="@string/settings" />
