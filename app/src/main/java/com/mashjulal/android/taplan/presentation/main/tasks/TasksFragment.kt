@@ -1,5 +1,6 @@
 package com.mashjulal.android.taplan.presentation.main.scheduledtasks
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,16 +10,19 @@ import androidx.lifecycle.Observer
 
 import com.mashjulal.android.taplan.R
 import com.mashjulal.android.taplan.presentation.main.tasks.viewholder.TaskViewHolderDelegate
+import com.mashjulal.android.taplan.presentation.utils.activity.ToolbarCustomizable
 import com.mashjulal.android.taplan.presentation.utils.recyclerview.CompositeViewHolderAdapter
 import com.mashjulal.android.taplan.presentation.utils.recyclerview.ItemViewModel
 import kotlinx.android.synthetic.main.fragment_scheduled_tasks.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.ClassCastException
 
 
 class TasksFragment : Fragment() {
 
     private val viewModel by viewModel<TasksViewModel>()
     private lateinit var adapter: CompositeViewHolderAdapter
+    private var toolbarCustomizable: ToolbarCustomizable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,8 +36,22 @@ class TasksFragment : Fragment() {
         initViewModel()
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context !is ToolbarCustomizable) {
+            throw ClassCastException()
+        }
+        toolbarCustomizable = context
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        toolbarCustomizable = null
+    }
+
     private fun initViews() {
         initRecyclerView()
+        toolbarCustomizable?.setTitles("Tasks")
     }
 
     private fun initRecyclerView() {

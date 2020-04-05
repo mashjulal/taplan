@@ -10,10 +10,11 @@ import com.mashjulal.android.taplan.presentation.main.scheduledtasks.ScheduledTa
 import com.mashjulal.android.taplan.presentation.main.scheduledtasks.TasksFragment
 import com.mashjulal.android.taplan.presentation.main.settings.SettingsFragment
 import com.mashjulal.android.taplan.presentation.main.today.TodayFragment
+import com.mashjulal.android.taplan.presentation.utils.activity.ToolbarCustomizable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.fab_new_task
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ToolbarCustomizable {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,10 +30,17 @@ class MainActivity : AppCompatActivity() {
             EditTaskActivity.newIntent(this),
             EditTaskActivity.REQUEST_CODE_NEW
         ) }
+
+        setSupportActionBar(toolbar)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun setTitles(title: String, subtitle: String) {
+        toolbar.title = title
+        toolbar.subtitle = subtitle
     }
 
     private fun selectBottomItem(menuItemId: Int) {

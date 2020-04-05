@@ -1,5 +1,6 @@
 package com.mashjulal.android.taplan.presentation.main.today
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,12 +11,16 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 
 import com.mashjulal.android.taplan.R
+import com.mashjulal.android.taplan.presentation.utils.activity.ToolbarCustomizable
 import kotlinx.android.synthetic.main.fragment_today.*
+import java.lang.ClassCastException
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class TodayFragment : Fragment() {
+
+    private var toolbarCustomizable: ToolbarCustomizable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,14 +35,26 @@ class TodayFragment : Fragment() {
         initToolbar()
     }
 
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context !is ToolbarCustomizable) {
+            throw ClassCastException()
+        }
+        toolbarCustomizable = context
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        toolbarCustomizable = null
+    }
+
     private fun initToolbar() {
-        toolbar.setTitle(R.string.today)
-
-        val calendar = Calendar.getInstance(Locale.getDefault())
-        val timeFormatter = SimpleDateFormat.getDateInstance()
-        toolbar.subtitle = timeFormatter.format(calendar.time)
-
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        toolbarCustomizable?.let {
+            val calendar = Calendar.getInstance(Locale.getDefault())
+            val timeFormatter = SimpleDateFormat.getDateInstance()
+            it.setTitles(getString(R.string.today), timeFormatter.format(calendar.time))
+        }
     }
 
     private fun bindNextTaskList() {
