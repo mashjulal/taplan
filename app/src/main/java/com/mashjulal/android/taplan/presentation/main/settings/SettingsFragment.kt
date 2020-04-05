@@ -1,20 +1,28 @@
 package com.mashjulal.android.taplan.presentation.main.settings
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import com.mashjulal.android.taplan.R
+import com.mashjulal.android.taplan.presentation.utils.ThemeHelper.applyTheme
 
 
-class SettingsFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+class SettingsFragment : PreferenceFragmentCompat() {
+
+    override fun onCreatePreferences(
+        savedInstanceState: Bundle?,
+        rootKey: String?
+    ) {
+        setPreferencesFromResource(R.xml.preferences, rootKey)
+
+        val themePreference = findPreference("themePref") as ListPreference?
+        themePreference?.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _, newValue ->
+                val themeOption = newValue as String?
+                applyTheme(themeOption!!)
+                true
+            }
     }
 
     companion object {

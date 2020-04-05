@@ -38,6 +38,7 @@ dependencies {
     implementation androidX.recyclerView
     implementation androidX.material
     implementation androidX.supportV4
+    implementation androidX.preferences
 
     implementation archRoom.runtime
     annotationProcessor archRoom.compiler
