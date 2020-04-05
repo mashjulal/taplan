@@ -1,4 +1,4 @@
-package com.mashjulal.android.taplan.android
+package com.mashjulal.android.taplan.data.android
 
 import android.content.Context
 import androidx.annotation.StringRes

@@ -3,7 +3,7 @@ package com.mashjulal.android.taplan.presentation.main.scheduledtasks
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mashjulal.android.taplan.R
-import com.mashjulal.android.taplan.android.ResourceExtractor
+import com.mashjulal.android.taplan.data.android.ResourceExtractor
 import com.mashjulal.android.taplan.models.domain.CompletionStatus
 import com.mashjulal.android.taplan.models.domain.ScheduledTask
 import com.mashjulal.android.taplan.models.domain.Task

@@ -1,7 +1,7 @@
 package com.mashjulal.android.taplan.di
 
 import androidx.room.Room
-import com.mashjulal.android.taplan.android.ResourceExtractor
+import com.mashjulal.android.taplan.data.android.ResourceExtractor
 import com.mashjulal.android.taplan.data.db.AppDatabase
 import com.mashjulal.android.taplan.data.db.DatabaseSchema.DATABASE_NAME
 import com.mashjulal.android.taplan.presentation.edittask.EditTaskViewModel
