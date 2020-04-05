@@ -7,11 +7,11 @@ import androidx.fragment.app.Fragment
 import com.mashjulal.android.taplan.R
 import com.mashjulal.android.taplan.presentation.edittask.EditTaskActivity
 import com.mashjulal.android.taplan.presentation.main.scheduledtasks.ScheduledTasksFragment
+import com.mashjulal.android.taplan.presentation.main.scheduledtasks.TasksFragment
 import com.mashjulal.android.taplan.presentation.main.settings.SettingsFragment
 import com.mashjulal.android.taplan.presentation.main.today.TodayFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.fab_new_task
-import kotlinx.android.synthetic.main.fragment_scheduled_tasks.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         return when (itemId) {
             R.id.mi_today -> TodayFragment.newInstance()
             R.id.mi_events -> ScheduledTasksFragment.newInstance()
-            R.id.mi_tasks -> ScheduledTasksFragment.newInstance()
+            R.id.mi_tasks -> TasksFragment.newInstance()
             R.id.mi_settings -> SettingsFragment.newInstance()
             else -> throw IllegalArgumentException("Unknown menu item id: $itemId")
         }

@@ -6,6 +6,7 @@ import com.mashjulal.android.taplan.data.db.AppDatabase
 import com.mashjulal.android.taplan.data.db.DatabaseSchema.DATABASE_NAME
 import com.mashjulal.android.taplan.presentation.edittask.EditTaskViewModel
 import com.mashjulal.android.taplan.presentation.main.scheduledtasks.ScheduledTasksViewModel
+import com.mashjulal.android.taplan.presentation.main.scheduledtasks.TasksViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -23,6 +24,12 @@ val applicationModule = module (override = true) {
 val scheduledTaskListModule = module (override = true) {
     viewModel {
         ScheduledTasksViewModel(get())
+    }
+}
+
+val taskListModule = module (override = true) {
+    viewModel {
+        TasksViewModel()
     }
 }
 

@@ -6,6 +6,7 @@ import androidx.preference.PreferenceManager
 import com.mashjulal.android.taplan.di.applicationModule
 import com.mashjulal.android.taplan.di.editTaskListModule
 import com.mashjulal.android.taplan.di.scheduledTaskListModule
+import com.mashjulal.android.taplan.di.taskListModule
 import com.mashjulal.android.taplan.presentation.utils.ThemeHelper
 import com.mashjulal.android.taplan.presentation.utils.ThemeHelper.applyTheme
 import org.koin.android.ext.koin.androidContext
@@ -18,7 +19,7 @@ class TaplanApplication: Application() {
 
         startKoin {
             androidContext(this@TaplanApplication)
-            modules(listOf(applicationModule, scheduledTaskListModule, editTaskListModule))
+            modules(listOf(applicationModule, scheduledTaskListModule, editTaskListModule, taskListModule))
         }
 
         val sharedPreferences: SharedPreferences =
