@@ -73,6 +73,8 @@ class ScheduledTasksFragment : Fragment() {
 
     companion object {
 
+        const val TAG = "ScheduledTasksFragment"
+
         @JvmStatic
         fun newInstance() =
             ScheduledTasksFragment()

@@ -76,6 +76,8 @@ class TodayFragment : Fragment() {
 
     companion object {
 
+        const val TAG = "TodayFragment"
+
         @JvmStatic
         fun newInstance() =
             TodayFragment()

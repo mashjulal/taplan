@@ -1,6 +1,8 @@
-package com.mashjulal.android.taplan.presentation.main.scheduledtasks
+package com.mashjulal.android.taplan.presentation.main.tasks
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +11,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 
 import com.mashjulal.android.taplan.R
+import com.mashjulal.android.taplan.presentation.main.scheduledtasks.TasksViewModel
 import com.mashjulal.android.taplan.presentation.main.tasks.viewholder.TaskViewHolderDelegate
 import com.mashjulal.android.taplan.presentation.utils.activity.ToolbarCustomizable
 import com.mashjulal.android.taplan.presentation.utils.recyclerview.CompositeViewHolderAdapter
@@ -49,6 +52,13 @@ class TasksFragment : Fragment() {
         toolbarCustomizable = null
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (Activity.RESULT_OK == resultCode) {
+            viewModel.refreshTasksList()
+        }
+    }
+
     private fun initViews() {
         initRecyclerView()
         toolbarCustomizable?.setTitles("Tasks")
@@ -66,10 +76,12 @@ class TasksFragment : Fragment() {
     }
 
     private fun updateList(items: List<ItemViewModel>) {
-        adapter.addItems(items)
+        adapter.setItems(items)
     }
 
     companion object {
+
+        const val TAG = "TasksFragment"
 
         @JvmStatic
         fun newInstance() =

@@ -25,10 +25,18 @@ class CompositeViewHolderAdapter private constructor(
 
     fun addItems(items: List<ItemViewModel>) {
         data.addAll(items)
+        notifyItemRangeChanged(itemCount-items.size-1, items.size)
+    }
+
+    fun setItems(items: List<ItemViewModel>) {
+        data.clear()
+        data.addAll(items)
+        notifyDataSetChanged()
     }
 
     fun clear() {
         data.clear()
+        notifyDataSetChanged()
     }
 
     class Builder {

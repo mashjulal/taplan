@@ -51,6 +51,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     companion object {
 
+        const val TAG = "SettingsFragment"
+
         @JvmStatic
         fun newInstance() =
             SettingsFragment()
