@@ -1,34 +1,33 @@
-package com.mashjulal.android.taplan.presentation.main.scheduledtasks
+package com.mashjulal.android.taplan.presentation.main.tasks
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mashjulal.android.taplan.models.domain.ScheduledTask
+import androidx.lifecycle.viewModelScope
+import com.mashjulal.android.taplan.domain.task.interactor.TaskInteractor
 import com.mashjulal.android.taplan.models.presentation.TaskViewModel
 import com.mashjulal.android.taplan.presentation.utils.recyclerview.ItemViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class TasksViewModel : ViewModel() {
+class TasksViewModel(
+    private val taskInteractor: TaskInteractor
+) : ViewModel() {
 
     val itemsLiveData: MutableLiveData<List<ItemViewModel>> = MutableLiveData()
 
     init {
-        val scheduledTasks = listOf(
-            ScheduledTask(0, "Task 1", 40, 0, 0),
-            ScheduledTask(1, "Task 2", 40, 0, 0),
-            ScheduledTask(2, "Task 3", 40, 0, 0)
-        )
-
-        itemsLiveData.value = scheduledTasks.map { TaskViewModel(it.name, "") }
+        refreshTasksList()
     }
 
     fun refreshTasksList() {
-        val scheduledTasks = listOf(
-            ScheduledTask(0, "Task 1", 40, 0, 0),
-            ScheduledTask(1, "Task 2", 40, 0, 0),
-            ScheduledTask(2, "Task 3", 40, 0, 0),
-            ScheduledTask(3, "Task 4", 40, 0, 0)
-        )
-
-        itemsLiveData.value = scheduledTasks.map { TaskViewModel(it.name, "") }
+        viewModelScope.launch {
+            val tasks: MutableList<TaskViewModel> = mutableListOf()
+            withContext(Dispatchers.IO) {
+                tasks.addAll(taskInteractor.getAllTasks().map { TaskViewModel(it.name, "") })
+            }
+            itemsLiveData.value = tasks
+        }
     }
 
 }

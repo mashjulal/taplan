@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 
 import com.mashjulal.android.taplan.R
-import com.mashjulal.android.taplan.presentation.main.scheduledtasks.TasksViewModel
 import com.mashjulal.android.taplan.presentation.main.tasks.viewholder.TaskViewHolderDelegate
 import com.mashjulal.android.taplan.presentation.utils.activity.ToolbarCustomizable
 import com.mashjulal.android.taplan.presentation.utils.recyclerview.CompositeViewHolderAdapter
@@ -72,7 +71,7 @@ class TasksFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        viewModel.itemsLiveData.observe(this, Observer { updateList(it) })
+        viewModel.itemsLiveData.observe(viewLifecycleOwner, Observer { updateList(it) })
     }
 
     private fun updateList(items: List<ItemViewModel>) {

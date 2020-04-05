@@ -11,7 +11,7 @@ ext {
     androidxCardViewVersion =           "1.0.0"
     androidxPreferencesVersion =        "1.1.0"
 
-    androidArchLifecycleVersion =       "2.1.0"
+    androidArchLifecycleVersion =       "2.2.0"
     androidArchRoomVersion =            "2.2.4"
 
     koinVersion =                       "2.0.1"
@@ -42,11 +42,13 @@ ext {
             archRoom = [
                     compiler:   "androidx.room:room-compiler:$androidArchRoomVersion",
                     runtime:    "androidx.room:room-runtime:$androidArchRoomVersion",
+                    ktx:        "androidx.room:room-ktx:$androidArchRoomVersion",
             ],
 
             archLifecycle = [
                     extensions:             "androidx.lifecycle:lifecycle-extensions:$androidArchLifecycleVersion",
                     annotationProcessor:    "androidx.lifecycle:lifecycle-compiler:$androidArchLifecycleVersion",
+                    viewModelCoroutines:     "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidArchLifecycleVersion",
             ],
 
             kotlinlib = [

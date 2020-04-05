@@ -2,13 +2,21 @@ package com.mashjulal.android.taplan.presentation.edittask
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.mashjulal.android.taplan.domain.task.interactor.TaskInteractor
+import com.mashjulal.android.taplan.models.domain.ScheduledTask
 import com.mashjulal.android.taplan.presentation.utils.SingleLiveEvent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private const val MAX_HOURS_PER_WEEK = 24 * 7
 private const val DEFAULT_TITLE = ""
 private const val DEFAULT_HOURS_PER_WEEK = 20
 
-class EditTaskViewModel: ViewModel() {
+class EditTaskViewModel(
+    private val taskInteractor: TaskInteractor
+): ViewModel() {
 
     val titleLiveData: MutableLiveData<String> = MutableLiveData()
     val hourInWeekLiveData: MutableLiveData<String> = MutableLiveData()
@@ -30,7 +38,20 @@ class EditTaskViewModel: ViewModel() {
     )
 
     fun saveTask() {
-        saveTaskCompleted.call()
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val name = titleLiveData.value ?: throw IllegalStateException()
+                val hoursPerWeek = hourInWeekLiveData.value?.toInt() ?: throw IllegalStateException()
+                val (fromHours, fromMinutes) = selectedStartTimeLiveData.value ?: throw IllegalStateException()
+                val (toHours, toMinutes) = selectedEndTimeLiveData.value ?: throw IllegalStateException()
+                taskInteractor.insertTask(ScheduledTask(
+                    name = name,
+                    hours_per_week = hoursPerWeek,
+                    time_from = (fromHours + fromMinutes * 60).toLong(),
+                    time_to = (toHours + toMinutes * 60).toLong()))
+            }
+            saveTaskCompleted.call()
+        }
     }
 
     fun validateTitle(title: String? = DEFAULT_TITLE) {

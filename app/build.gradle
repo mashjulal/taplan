@@ -41,10 +41,12 @@ dependencies {
     implementation androidX.preferences
 
     implementation archRoom.runtime
-    annotationProcessor archRoom.compiler
+    implementation archRoom.ktx
+    kapt archRoom.compiler
 
     implementation archLifecycle.extensions
-    annotationProcessor archLifecycle.annotationProcessor
+    implementation archLifecycle.viewModelCoroutines
+    kapt archLifecycle.annotationProcessor
 
     implementation coroutines.core
     implementation coroutines.android

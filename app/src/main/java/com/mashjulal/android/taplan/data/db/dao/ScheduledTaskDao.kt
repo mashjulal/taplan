@@ -12,22 +12,22 @@ interface ScheduledTaskDao {
         SELECT * 
         FROM ${ScheduledTaskTable.TABLE_NAME}
         """)
-    fun getAll(): List<ScheduledTaskEntity>
+    suspend fun getAll(): List<ScheduledTaskEntity>
 
     @Query("""
         SELECT * 
         FROM ${ScheduledTaskTable.TABLE_NAME} 
         WHERE ${ScheduledTaskTable.COLUMN_ID} = :id
         """)
-    fun getById(id: Long): ScheduledTaskEntity
+    suspend fun getById(id: Long): ScheduledTaskEntity
 
     @Insert
-    fun insert(task: ScheduledTaskEntity)
+    suspend fun insert(task: ScheduledTaskEntity)
 
     @Update
-    fun update(task: ScheduledTaskEntity)
+    suspend fun update(task: ScheduledTaskEntity)
 
     @Delete
-    fun delete(task: ScheduledTaskEntity)
+    suspend fun delete(task: ScheduledTaskEntity)
 
 }
