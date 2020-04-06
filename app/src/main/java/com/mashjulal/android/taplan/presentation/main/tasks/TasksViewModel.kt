@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashjulal.android.taplan.domain.task.interactor.TaskInteractor
-import com.mashjulal.android.taplan.models.presentation.TaskViewModel
+import com.mashjulal.android.taplan.models.presentation.ScheduledTaskViewModel
 import com.mashjulal.android.taplan.presentation.utils.recyclerview.ItemViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,9 +22,9 @@ class TasksViewModel(
 
     fun refreshTasksList() {
         viewModelScope.launch {
-            val tasks: MutableList<TaskViewModel> = mutableListOf()
+            val tasks: MutableList<ScheduledTaskViewModel> = mutableListOf()
             withContext(Dispatchers.IO) {
-                tasks.addAll(taskInteractor.getAllTasks().map { TaskViewModel(it.name, "") })
+                tasks.addAll(taskInteractor.getAllTasks().map { ScheduledTaskViewModel(it) })
             }
             itemsLiveData.value = tasks
         }

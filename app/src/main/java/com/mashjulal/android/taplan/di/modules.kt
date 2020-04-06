@@ -1,15 +1,14 @@
 package com.mashjulal.android.taplan.di
 
-import androidx.room.Room
 import com.mashjulal.android.taplan.data.android.ResourceExtractor
 import com.mashjulal.android.taplan.data.db.AppDatabase
-import com.mashjulal.android.taplan.data.db.DatabaseSchema.DATABASE_NAME
 import com.mashjulal.android.taplan.data.repository.TaskRepositoryImpl
 import com.mashjulal.android.taplan.domain.task.interactor.TaskInteractor
 import com.mashjulal.android.taplan.domain.task.interactor.TaskInteractorImpl
 import com.mashjulal.android.taplan.presentation.edittask.EditTaskViewModel
 import com.mashjulal.android.taplan.presentation.main.scheduledtasks.ScheduledTasksViewModel
 import com.mashjulal.android.taplan.presentation.main.tasks.TasksViewModel
+import com.mashjulal.android.taplan.presentation.task.AboutTaskViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -52,5 +51,11 @@ val taskListModule = module (override = true) {
 val editTaskListModule = module (override = true) {
     viewModel {
         EditTaskViewModel(get())
+    }
+}
+
+val aboutTaskModule = module (override = true) {
+    viewModel {
+        AboutTaskViewModel(get(), get())
     }
 }

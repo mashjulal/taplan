@@ -15,6 +15,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.google.android.material.textfield.TextInputLayout
 import com.mashjulal.android.taplan.R
+import com.mashjulal.android.taplan.models.domain.ScheduledTask
+import com.mashjulal.android.taplan.presentation.utils.minutesToTimePair
 import kotlinx.android.synthetic.main.activity_edit_task.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Calendar
@@ -53,14 +55,22 @@ class EditTaskActivity : AppCompatActivity() {
         viewModel.startTimeValidationErrorLiveData.observe(this, Observer { updateTimeError(it, tv_start_time_error) })
         viewModel.endTimeValidationErrorLiveData.observe(this, Observer { updateTimeError(it, tv_end_time_error) })
 
-        viewModel.validateTitle()
-        viewModel.validateHourCount()
+        val task: ScheduledTask? = intent.getParcelableExtra(PARAM_TASK)
+        viewModel.taskLiveData.value = task
+
+        val title = task?.name ?: EditTaskViewModel.DEFAULT_TITLE
+        val hours = (task?.hours_per_week ?: EditTaskViewModel.DEFAULT_HOURS_PER_WEEK).toString()
 
         val calendar = Calendar.getInstance()
         val selectedHours = calendar[Calendar.HOUR_OF_DAY]
         val selectedMinutes = calendar[Calendar.MINUTE]
-        viewModel.validateStartTime(selectedHours to selectedMinutes)
-        viewModel.validateEndTime(selectedHours to selectedMinutes+1)
+        val from = if (task != null) minutesToTimePair(task.time_from.toInt()) else selectedHours to selectedMinutes
+        val to = if (task != null) minutesToTimePair(task.time_to.toInt()) else selectedHours to selectedMinutes+1
+
+        viewModel.validateTitle(title)
+        viewModel.validateHourCount(hours)
+        viewModel.validateStartTime(from)
+        viewModel.validateEndTime(to)
     }
 
     private fun updateTimeError(error: String?, tvError: TextView) {
@@ -133,8 +143,13 @@ class EditTaskActivity : AppCompatActivity() {
 
     companion object {
         const val REQUEST_CODE_NEW = 10
+        const val REQUEST_CODE_EDIT = 100
 
-        fun newIntent(context: Context) = Intent(context, EditTaskActivity::class.java)
+        private const val PARAM_TASK = "PARAM_TASK"
+
+        fun newIntent(context: Context, task: ScheduledTask? = null) = Intent(context, EditTaskActivity::class.java).apply {
+            putExtra(PARAM_TASK, task)
+        }
     }
 }
 

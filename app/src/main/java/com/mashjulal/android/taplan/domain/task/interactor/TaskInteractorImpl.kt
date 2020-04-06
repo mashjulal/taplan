@@ -12,4 +12,9 @@ class TaskInteractorImpl(
     override suspend fun insertTask(task: ScheduledTask) {
         repo.insertTask(task)
     }
+
+    override suspend fun getTask(id: Long): ScheduledTask = repo.getTask(id)
+    override suspend fun updateTask(task: ScheduledTask) {
+        repo.updateTask(task)
+    }
 }

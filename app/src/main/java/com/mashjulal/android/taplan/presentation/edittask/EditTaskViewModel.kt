@@ -1,23 +1,25 @@
 package com.mashjulal.android.taplan.presentation.edittask
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashjulal.android.taplan.domain.task.interactor.TaskInteractor
 import com.mashjulal.android.taplan.models.domain.ScheduledTask
 import com.mashjulal.android.taplan.presentation.utils.SingleLiveEvent
+import com.mashjulal.android.taplan.presentation.utils.minutesToTimePair
+import com.mashjulal.android.taplan.presentation.utils.timePairToMinutes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 private const val MAX_HOURS_PER_WEEK = 24 * 7
-private const val DEFAULT_TITLE = ""
-private const val DEFAULT_HOURS_PER_WEEK = 20
 
 class EditTaskViewModel(
     private val taskInteractor: TaskInteractor
 ): ViewModel() {
 
+    val taskLiveData: MutableLiveData<ScheduledTask?> = MutableLiveData()
     val titleLiveData: MutableLiveData<String> = MutableLiveData()
     val hourInWeekLiveData: MutableLiveData<String> = MutableLiveData()
     val selectedStartTimeLiveData: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
@@ -40,15 +42,19 @@ class EditTaskViewModel(
     fun saveTask() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
+                val id = taskLiveData.value?.id ?: 0
                 val name = titleLiveData.value ?: throw IllegalStateException()
                 val hoursPerWeek = hourInWeekLiveData.value?.toInt() ?: throw IllegalStateException()
-                val (fromHours, fromMinutes) = selectedStartTimeLiveData.value ?: throw IllegalStateException()
-                val (toHours, toMinutes) = selectedEndTimeLiveData.value ?: throw IllegalStateException()
-                taskInteractor.insertTask(ScheduledTask(
-                    name = name,
-                    hours_per_week = hoursPerWeek,
-                    time_from = (fromHours + fromMinutes * 60).toLong(),
-                    time_to = (toHours + toMinutes * 60).toLong()))
+                val task = ScheduledTask(id, name, hoursPerWeek,
+                    time_from = timePairToMinutes(selectedStartTimeLiveData.value!!).toLong(),
+                    time_to = timePairToMinutes(selectedEndTimeLiveData.value!!).toLong()
+                )
+
+                if (taskLiveData.value != null) {
+                    taskInteractor.updateTask(task)
+                } else {
+                    taskInteractor.insertTask(task)
+                }
             }
             saveTaskCompleted.call()
         }
@@ -119,5 +125,10 @@ class EditTaskViewModel(
 
     private fun validateOtherFields() {
         validationPassed.value = validationFieldsLiveDataList.all { it.value.isNullOrEmpty() }
+    }
+
+    companion object {
+        const val DEFAULT_TITLE = ""
+        const val DEFAULT_HOURS_PER_WEEK = 20
     }
 }

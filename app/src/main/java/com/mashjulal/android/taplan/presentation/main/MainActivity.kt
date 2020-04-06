@@ -10,6 +10,7 @@ import com.mashjulal.android.taplan.presentation.main.scheduledtasks.ScheduledTa
 import com.mashjulal.android.taplan.presentation.main.tasks.TasksFragment
 import com.mashjulal.android.taplan.presentation.main.settings.SettingsFragment
 import com.mashjulal.android.taplan.presentation.main.today.TodayFragment
+import com.mashjulal.android.taplan.presentation.task.AboutTaskActivity
 import com.mashjulal.android.taplan.presentation.utils.activity.ToolbarCustomizable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.fab_new_task
@@ -37,8 +38,10 @@ class MainActivity : AppCompatActivity(), ToolbarCustomizable {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (EditTaskActivity.REQUEST_CODE_NEW == requestCode) {
-            supportFragmentManager.findFragmentByTag(TasksFragment.TAG)?.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            EditTaskActivity.REQUEST_CODE_NEW, AboutTaskActivity.REQUEST_CODE_SHOW ->
+                supportFragmentManager.findFragmentByTag(TasksFragment.TAG)
+                    ?.onActivityResult(requestCode, resultCode, data)
         }
     }
 
