@@ -30,32 +30,18 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation kotlinlib.stdlib
-
     implementation androidX.ktx
-    implementation androidX.appCompat
-    implementation androidX.appCompatResources
-    implementation androidX.constraintLayout
-    implementation androidX.recyclerView
-    implementation androidX.material
-    implementation androidX.supportV4
+    implementation libGroups.androidX.appCompat
+    implementation libGroups.androidX.design
     implementation androidX.preferences
-
-    implementation archRoom.runtime
-    implementation archRoom.ktx
-    kapt archRoom.compiler
-
-    implementation archLifecycle.extensions
-    implementation archLifecycle.viewModelCoroutines
-    kapt archLifecycle.annotationProcessor
-
-    implementation coroutines.core
-    implementation coroutines.android
-
-    implementation koin.core
-    implementation koin.android
-    implementation koin.androidXViewModel
-
+    implementation libGroups.room
+    implementation libGroups.lifecycle
+    implementation libGroups.coroutines
+    implementation libGroups.koin
     implementation otherLibraries.materialCalendarView
+
+    kapt room.compiler
+    kapt lifecycle.annotationProcessor
 
     testImplementation testLibraries.junit
 }
