@@ -1,7 +1,7 @@
 package com.mashjulal.android.taplan.models.domain
 
 data class Task(
-    val id: Long,
+    val id: Long = 0,
     val scheduledTaskId: Long,
     val scheduled_time_start: Long,
     val scheduled_time_end: Long,
