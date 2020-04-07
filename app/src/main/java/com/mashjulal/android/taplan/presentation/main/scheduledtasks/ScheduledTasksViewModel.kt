@@ -2,46 +2,44 @@ package com.mashjulal.android.taplan.presentation.main.scheduledtasks
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mashjulal.android.taplan.R
 import com.mashjulal.android.taplan.data.android.ResourceExtractor
-import com.mashjulal.android.taplan.models.domain.CompletionStatus
+import com.mashjulal.android.taplan.domain.scheduledtask.interactor.ScheduledTaskInteractor
+import com.mashjulal.android.taplan.domain.task.interactor.TaskInteractor
 import com.mashjulal.android.taplan.models.domain.ScheduledTask
 import com.mashjulal.android.taplan.models.domain.Task
 import com.mashjulal.android.taplan.models.presentation.SectionHeaderViewModel
 import com.mashjulal.android.taplan.models.presentation.TaskViewModel
 import com.mashjulal.android.taplan.presentation.utils.recyclerview.ItemViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ScheduledTasksViewModel(
-    private val resourceExtractor: ResourceExtractor
+    private val resourceExtractor: ResourceExtractor,
+    private val taskInteractor: TaskInteractor,
+    private val scheduledTaskInteractor: ScheduledTaskInteractor
 ) : ViewModel() {
 
     val itemsLiveData: MutableLiveData<List<ItemViewModel>> = MutableLiveData()
 
     init {
-        val scheduledTasks = listOf(
-            ScheduledTask(0, "Task 1", 40, 0, 0),
-            ScheduledTask(1, "Task 2", 40, 0, 0),
-            ScheduledTask(2, "Task 3", 40, 0, 0)
-        )
+        viewModelScope.launch {
+            val itemModels = mutableListOf<ItemViewModel>()
+            withContext(Dispatchers.IO) {
+                val tasks = scheduledTaskInteractor.getCurrentWeekTasks()
+                val scheduledTasks = taskInteractor.getAllTasks()
 
-        val today = Calendar.getInstance()
-
-        val tasks = mutableListOf(
-            Task(0, 0, today.timeInMillis, today.timeInMillis+1000*60*60, 0, 0, CompletionStatus.NOT_STARTED),
-            Task(1, 1, today.timeInMillis+1000*60*60, today.timeInMillis+1000*60*60*2, 0, 0, CompletionStatus.NOT_STARTED),
-            Task(2, 2, today.timeInMillis+1000*60*60*2, today.timeInMillis+1000*60*60*3, 0, 0, CompletionStatus.NOT_STARTED),
-            Task(3, 1, today.timeInMillis+1000*60*60*24, today.timeInMillis+1000*60*60*25, 0, 0, CompletionStatus.NOT_STARTED),
-            Task(4, 2, today.timeInMillis+1000*60*60*25, today.timeInMillis+1000*60*60*26, 0, 0, CompletionStatus.NOT_STARTED),
-            Task(5, 0, today.timeInMillis+1000*60*60*26, today.timeInMillis+1000*60*60*27, 0, 0, CompletionStatus.NOT_STARTED),
-            Task(6, 2, today.timeInMillis+1000*60*60*27, today.timeInMillis+1000*60*60*28, 0, 0, CompletionStatus.NOT_STARTED)
-        )
-
-        prepareViewModels(tasks, scheduledTasks)
+                itemModels.addAll(prepareViewModels(tasks, scheduledTasks))
+            }
+            itemsLiveData.value = itemModels
+        }
     }
 
-    private fun prepareViewModels(tasks: List<Task>, scheduledTasks: List<ScheduledTask>) {
+    private fun prepareViewModels(tasks: List<Task>, scheduledTasks: List<ScheduledTask>): List<ItemViewModel> {
         val modelList = mutableListOf<ItemViewModel>()
 
         val groupedByWeekdayTasks = groupTasksByWeekday(tasks)
@@ -69,7 +67,7 @@ class ScheduledTasksViewModel(
             }
         }
 
-        itemsLiveData.value = modelList
+        return modelList
     }
 
     private fun groupTasksByWeekday(tasks: List<Task>): Map<Date, List<Task>> {

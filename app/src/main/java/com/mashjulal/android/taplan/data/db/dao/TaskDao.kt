@@ -11,29 +11,36 @@ interface TaskDao {
         SELECT * 
         FROM ${TaskTable.TABLE_NAME}
         """)
-    fun getAll(): List<TaskEntity>
+    suspend fun getAll(): List<TaskEntity>
+
+    @Query("""
+        SELECT * 
+        FROM ${TaskTable.TABLE_NAME}
+        WHERE ${TaskTable.COLUMN_SCHEDULED_TIME_START} >= :from AND ${TaskTable.COLUMN_SCHEDULED_TIME_END} >= :to
+        """)
+    suspend fun getBetweenTimestamps(from: Long, to: Long): List<TaskEntity>
 
     @Query("""
         SELECT * 
         FROM ${TaskTable.TABLE_NAME} 
         WHERE ${TaskTable.COLUMN_ID} = :id
         """)
-    fun getById(id: Long): TaskEntity
+    suspend fun getById(id: Long): TaskEntity
 
     @Query("""
         SELECT * 
         FROM ${TaskTable.TABLE_NAME} 
         WHERE ${TaskTable.COLUMN_SCHEDULED_TASK_ID} = :scheduledTaskId
         """)
-    fun getAllByScheduledTaskId(scheduledTaskId: Long): List<TaskEntity>
+    suspend fun getAllByScheduledTaskId(scheduledTaskId: Long): List<TaskEntity>
 
     @Insert
-    fun insert(task: TaskEntity)
+    suspend fun insert(task: TaskEntity)
 
     @Update
-    fun update(task: TaskEntity)
+    suspend fun update(task: TaskEntity)
 
     @Delete
-    fun delete(task: TaskEntity)
+    suspend fun delete(task: TaskEntity)
 
 }
