@@ -12,9 +12,9 @@ class TaskRepositoryImpl(
     override suspend fun getAllTasks(): List<ScheduledTask> = dao.getAll()
         .map { ScheduledTask(it.id, it.name, it.hoursPerWeek, it.timeFrom, it.timeTo) }
 
-    override suspend fun insertTask(task: ScheduledTask) {
-        dao.insert(ScheduledTaskEntity(task.id, task.name, task.hours_per_week, task.time_from, task.time_to))
-    }
+    override suspend fun insertTask(task: ScheduledTask) = dao.insert(
+        ScheduledTaskEntity(task.id, task.name, task.hours_per_week, task.time_from, task.time_to)
+    )
 
     override suspend fun getTask(id: Long): ScheduledTask {
         val task = dao.getById(id)

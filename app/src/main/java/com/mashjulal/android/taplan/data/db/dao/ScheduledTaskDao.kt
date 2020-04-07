@@ -22,7 +22,7 @@ interface ScheduledTaskDao {
     suspend fun getById(id: Long): ScheduledTaskEntity
 
     @Insert
-    suspend fun insert(task: ScheduledTaskEntity)
+    suspend fun insert(task: ScheduledTaskEntity): Long
 
     @Update
     suspend fun update(task: ScheduledTaskEntity)

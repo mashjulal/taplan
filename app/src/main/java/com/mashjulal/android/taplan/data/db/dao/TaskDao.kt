@@ -16,7 +16,8 @@ interface TaskDao {
     @Query("""
         SELECT * 
         FROM ${TaskTable.TABLE_NAME}
-        WHERE ${TaskTable.COLUMN_SCHEDULED_TIME_START} >= :from AND ${TaskTable.COLUMN_SCHEDULED_TIME_END} >= :to
+        WHERE ${TaskTable.COLUMN_SCHEDULED_TIME_START} >= :from AND ${TaskTable.COLUMN_SCHEDULED_TIME_END} <= :to
+        ORDER BY ${TaskTable.COLUMN_SCHEDULED_TIME_START}, ${TaskTable.COLUMN_SCHEDULED_TIME_END}
         """)
     suspend fun getBetweenTimestamps(from: Long, to: Long): List<TaskEntity>
 
@@ -36,6 +37,9 @@ interface TaskDao {
 
     @Insert
     suspend fun insert(task: TaskEntity)
+
+    @Insert
+    suspend fun insert(tasks: List<TaskEntity>)
 
     @Update
     suspend fun update(task: TaskEntity)

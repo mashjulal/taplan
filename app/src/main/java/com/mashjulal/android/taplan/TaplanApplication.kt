@@ -16,7 +16,7 @@ class TaplanApplication: Application() {
 
         startKoin {
             androidContext(this@TaplanApplication)
-            modules(listOf(applicationModule, scheduledTaskListModule, editTaskListModule, taskListModule, aboutTaskModule))
+            modules(listOf(applicationModule, scheduledTaskListModule, editTaskListModule, taskListModule, aboutTaskModule, repositoryModule))
         }
 
         val sharedPreferences: SharedPreferences =

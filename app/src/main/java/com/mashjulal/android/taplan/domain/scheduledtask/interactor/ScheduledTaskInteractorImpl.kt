@@ -18,6 +18,10 @@ class ScheduledTaskInteractorImpl(
         val from = cal.timeInMillis
 
         cal[Calendar.DAY_OF_WEEK] = Calendar.SUNDAY
+        cal[Calendar.HOUR] = 23
+        cal[Calendar.MINUTE] = 59
+        cal[Calendar.SECOND] = 59
+        cal[Calendar.MILLISECOND] = 999
         ++cal[Calendar.WEEK_OF_YEAR]
         val to = cal.timeInMillis
 

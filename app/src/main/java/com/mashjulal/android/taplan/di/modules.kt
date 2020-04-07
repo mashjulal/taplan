@@ -4,8 +4,12 @@ import com.mashjulal.android.taplan.data.android.ResourceExtractor
 import com.mashjulal.android.taplan.data.db.AppDatabase
 import com.mashjulal.android.taplan.data.repository.ScheduledTaskRepositoryImpl
 import com.mashjulal.android.taplan.data.repository.TaskRepositoryImpl
+import com.mashjulal.android.taplan.domain.scheduledtask.ScheduledTaskRepository
 import com.mashjulal.android.taplan.domain.scheduledtask.interactor.ScheduledTaskInteractor
 import com.mashjulal.android.taplan.domain.scheduledtask.interactor.ScheduledTaskInteractorImpl
+import com.mashjulal.android.taplan.domain.scheduledtask.register.ScheduledTaskRegister
+import com.mashjulal.android.taplan.domain.scheduledtask.register.ScheduledTaskRegisterImpl
+import com.mashjulal.android.taplan.domain.task.TaskRepository
 import com.mashjulal.android.taplan.domain.task.interactor.TaskInteractor
 import com.mashjulal.android.taplan.domain.task.interactor.TaskInteractorImpl
 import com.mashjulal.android.taplan.presentation.edittask.EditTaskViewModel
@@ -34,10 +38,24 @@ val applicationModule = module (override = true) {
     }
 }
 
+val repositoryModule = module (override = true) {
+    factory<TaskRepository> {
+        TaskRepositoryImpl(get())
+    }
+
+    factory<ScheduledTaskRepository> {
+        ScheduledTaskRepositoryImpl(get())
+    }
+}
+
 val scheduledTaskListModule = module (override = true) {
 
+    factory<ScheduledTaskRegister> {
+        ScheduledTaskRegisterImpl(get(), get())
+    }
+
     factory<ScheduledTaskInteractor> {
-        ScheduledTaskInteractorImpl(ScheduledTaskRepositoryImpl(get()))
+        ScheduledTaskInteractorImpl(get())
     }
 
     viewModel {
@@ -48,7 +66,7 @@ val scheduledTaskListModule = module (override = true) {
 val taskListModule = module (override = true) {
 
     factory<TaskInteractor> {
-        TaskInteractorImpl(TaskRepositoryImpl(get()))
+        TaskInteractorImpl(get(), get())
     }
 
     viewModel {
