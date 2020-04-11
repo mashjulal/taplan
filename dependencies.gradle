@@ -14,6 +14,7 @@ ext {
 
             androidArchLifecycle:       "2.2.0",
             androidArchRoom:            "2.2.4",
+            androidArchWorkManager:     "2.3.4",
 
             koin:                       "2.0.1",
 
@@ -51,6 +52,11 @@ ext {
                     extensions:             "androidx.lifecycle:lifecycle-extensions:$versions.androidArchLifecycle",
                     annotationProcessor:    "androidx.lifecycle:lifecycle-compiler:$versions.androidArchLifecycle",
                     viewModelCoroutines:     "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.androidArchLifecycle",
+            ],
+
+            workManager = [
+                    runtime:    "androidx.work:work-runtime:$versions.androidArchWorkManager",
+                    ktx:        "androidx.work:work-runtime-ktx:$versions.androidArchWorkManager"
             ],
 
             kotlinlib = [
@@ -98,6 +104,11 @@ ext {
 
             lifecycle: [ lifecycle.extensions,
                          lifecycle.viewModelCoroutines
+            ],
+
+            workManager: [
+                    workManager.runtime,
+                    workManager.ktx
             ],
 
             coroutines: [ coroutines.core,

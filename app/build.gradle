@@ -25,6 +25,9 @@ android {
     dataBinding {
         enabled = true
     }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 }
 
 dependencies {
@@ -36,6 +39,7 @@ dependencies {
     implementation androidX.preferences
     implementation libGroups.room
     implementation libGroups.lifecycle
+    implementation libGroups.workManager
     implementation libGroups.coroutines
     implementation libGroups.koin
     implementation otherLibraries.materialCalendarView

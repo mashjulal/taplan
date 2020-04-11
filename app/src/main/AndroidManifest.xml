@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.mashjulal.android.taplan">
 
     <application
@@ -25,6 +26,12 @@
         </activity>
         <activity android:name=".presentation.dailyschedule.DailyScheduleActivity" />
         <activity android:name=".presentation.edittask.EditTaskActivity" />
+
+        <provider
+            android:authorities="com.mashjulal.android.taplan.workmanager-init"
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            tools:node="remove"
+            android:exported="false"/>
     </application>
 
 </manifest>

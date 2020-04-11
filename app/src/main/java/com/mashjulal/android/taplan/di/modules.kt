@@ -1,9 +1,16 @@
 package com.mashjulal.android.taplan.di
 
+import androidx.work.ListenableWorker
+import androidx.work.Worker
 import com.mashjulal.android.taplan.data.android.ResourceExtractor
+import com.mashjulal.android.taplan.data.android.TaskSchedulerWorker
+import com.mashjulal.android.taplan.data.android.worker.TaplanWorkerFactory
+import com.mashjulal.android.taplan.data.android.worker.WorkerFactoryCreator
 import com.mashjulal.android.taplan.data.db.AppDatabase
 import com.mashjulal.android.taplan.data.repository.ScheduledTaskRepositoryImpl
 import com.mashjulal.android.taplan.data.repository.TaskRepositoryImpl
+import com.mashjulal.android.taplan.data.scheduler.TaskSchedulerImpl
+import com.mashjulal.android.taplan.domain.TaskScheduler
 import com.mashjulal.android.taplan.domain.scheduledtask.ScheduledTaskRepository
 import com.mashjulal.android.taplan.domain.scheduledtask.interactor.ScheduledTaskInteractor
 import com.mashjulal.android.taplan.domain.scheduledtask.interactor.ScheduledTaskInteractorImpl
@@ -27,6 +34,21 @@ val applicationModule = module (override = true) {
 
     single {
         ResourceExtractor(androidContext())
+    }
+
+    single {
+        val creators = mapOf<Class<out ListenableWorker>, WorkerFactoryCreator>(
+            TaskSchedulerWorker::class.java to get<TaskSchedulerWorker.Companion.FactoryCreator>()
+        )
+        TaplanWorkerFactory(creators)
+    }
+
+    single<TaskScheduler> {
+        TaskSchedulerImpl(androidContext())
+    }
+
+    single {
+        TaskSchedulerWorker.Companion.FactoryCreator(get(), get())
     }
 
     factory {
