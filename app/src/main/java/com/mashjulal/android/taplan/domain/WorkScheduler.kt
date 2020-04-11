@@ -1,5 +1,5 @@
 package com.mashjulal.android.taplan.domain
 
-interface TaskScheduler {
+interface WorkScheduler {
     suspend fun schedule()
 }
